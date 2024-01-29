@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class GamePlayUI : MonoBehaviour
 {
-    public Button DropButton, DecreaseBidButton, IncreaseBidButton;
-    public TextMeshProUGUI BidText, MoneyText;
-    public Image ClickToDropImage;
+    public Button Drop, DecreaseBid, IncreaseBid;
+    public TextMeshProUGUI BidText;
 }
