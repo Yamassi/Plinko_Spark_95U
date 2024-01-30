@@ -72,6 +72,7 @@ public class Game : IStateSwitcher, IUIService, IDataService
                 Coins = Const.FirstCoins,
                 AvailableBalls = new() { 0 },
                 AvailableMaps = new() { 0 },
+                DailyGiftsData = new() { new DailyGiftData() }
             };
 
             PlayerPrefs.SetFloat("MusicVolume", 1);

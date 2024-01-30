@@ -1,9 +1,8 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using UniRx;
+using Tretimi;
 using UnityEngine;
 
 public class LoadingState : State
@@ -26,11 +25,19 @@ public class LoadingState : State
     {
         _loading.Logo.transform.localScale = Vector3.zero;
         ComponentsToggle(true);
-
+        CheckGifts();
+        
         await UniTask.Delay(100);
         await _loading.Logo.transform.DOScale(Vector3.one, 1).SetEase(Ease.InOutElastic).ToUniTask();
         await UniTask.Delay(1000);
-        _stateSwitcher.SwitchState<DailyGiftState>();
+
+        var gifts = _dataService.GetData().DailyGiftsData;
+        bool isGiftOpen = !gifts.Last().IsTaked;
+        
+        if (isGiftOpen)
+            GoToDailyGift();
+        else
+            GoToMainMenu();
     }
 
     public override void Exit()
@@ -44,5 +51,23 @@ public class LoadingState : State
 
     public override void Unsubsribe()
     {
+    }
+
+    private void CheckGifts()
+    {
+        int maxGifts = 6;
+        var gifts = _dataService.GetData().DailyGiftsData;
+        bool isLastGiftTaked = gifts.Last().IsTaked && gifts.Count < maxGifts;
+
+        if (isLastGiftTaked)
+        {
+            DateTime lastGiftTime = Tretimi.Time.ConvertStringToDateTime(gifts.Last().TakedTime);
+            bool isTimeToOpenNewGift = DateTime.Now >= lastGiftTime.AddMinutes(0.3f);
+            
+            if (isTimeToOpenNewGift)
+            {
+                gifts.Add(new DailyGiftData());
+            }
+        }
     }
 }

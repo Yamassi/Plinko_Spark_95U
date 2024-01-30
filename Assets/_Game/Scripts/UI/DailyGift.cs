@@ -9,7 +9,8 @@ public class DailyGift : MonoBehaviour
     [SerializeField] private int _reward;
     [SerializeField] private Button _open;
     [SerializeField] private TextMeshProUGUI _rewardText;
-    public Action<int,int> OnSelect;
+    public Action<int, int> OnSelect;
+
     private void OnValidate()
     {
         _open = GetComponentInChildren<Button>(true);
@@ -28,5 +29,22 @@ public class DailyGift : MonoBehaviour
         _open.onClick.RemoveListener(Clicked);
     }
 
-    private void Clicked() => OnSelect?.Invoke(_id,_reward);
+    private void Clicked() => OnSelect?.Invoke(_id, _reward);
+
+    public void OpenGift()
+    {
+        _open.interactable = true;
+        _open.gameObject.SetActive(true);
+    }
+
+    public void CloseGift()
+    {
+        _open.gameObject.SetActive(false);
+    }
+
+    public void GiftTaked()
+    {
+        _open.interactable = false;
+        _open.gameObject.SetActive(true);
+    }
 }

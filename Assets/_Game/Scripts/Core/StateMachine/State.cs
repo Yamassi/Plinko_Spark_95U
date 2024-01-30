@@ -35,4 +35,5 @@ public abstract class State
 
     public void GoToMainMenu() => _stateSwitcher.SwitchState<MainMenuState>();
     public void GoToInAppShop() => _stateSwitcher.SwitchState<InAppShopState>();
+    public void GoToDailyGift() => _stateSwitcher.SwitchState<DailyGiftState>();
 }

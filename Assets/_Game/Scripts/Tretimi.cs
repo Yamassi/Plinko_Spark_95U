@@ -55,7 +55,7 @@ namespace Tretimi
 
         public static DateTime ConvertStringToDateTime(string dateTime)
         {
-            DateTime convertedTime = DateTime.Parse(dateTime, CultureInfo.InvariantCulture);
+            DateTime convertedTime = DateTime.Parse(dateTime, DateTimeFormatInfo.CurrentInfo);
 
             return convertedTime;
         }
