@@ -36,4 +36,8 @@ public abstract class State
     public void GoToMainMenu() => _stateSwitcher.SwitchState<MainMenuState>();
     public void GoToInAppShop() => _stateSwitcher.SwitchState<InAppShopState>();
     public void GoToDailyGift() => _stateSwitcher.SwitchState<DailyGiftState>();
+    public void GoToSelectDifficulty() => _stateSwitcher.SwitchState<SelectDifficultyState>();
+    public void GoToSettings() => _stateSwitcher.SwitchState<SettingsState>();
+    public void GoToShop() => _stateSwitcher.SwitchState<ShopState>();
+    public void GoToDailyTask() => _stateSwitcher.SwitchState<DailyTaskState>();
 }

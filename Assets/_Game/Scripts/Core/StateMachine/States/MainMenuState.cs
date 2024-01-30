@@ -44,10 +44,18 @@ public class MainMenuState : State
     public override void Subsribe()
     {
         _bottom.Coins.AddCoins.onClick.AddListener(GoToInAppShop);
+        _mainMenu.Play.onClick.AddListener(GoToSelectDifficulty);
+        _mainMenu.Settings.onClick.AddListener(GoToSettings);
+        _mainMenu.Shop.onClick.AddListener(GoToShop);
+        _mainMenu.DailyTasks.onClick.AddListener(GoToDailyTask);
     }
 
     public override void Unsubsribe()
     {
         _bottom.Coins.AddCoins.onClick.RemoveListener(GoToInAppShop);
+        _mainMenu.Play.onClick.RemoveListener(GoToSelectDifficulty);
+        _mainMenu.Settings.onClick.RemoveListener(GoToSettings);
+        _mainMenu.Shop.onClick.RemoveListener(GoToShop);
+        _mainMenu.DailyTasks.onClick.RemoveListener(GoToDailyTask);
     }
 }
