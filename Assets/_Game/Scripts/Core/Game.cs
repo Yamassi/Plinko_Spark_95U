@@ -121,13 +121,12 @@ public class Game : IStateSwitcher, IUIService, IDataService
                 LastLogInTime = DateTime.Now.ToString(DateTimeFormatInfo.CurrentInfo),
             };
 
-            PlayerPrefs.SetFloat("MusicVolume", 1);
-            PlayerPrefs.SetFloat("SoundVolume", 1);
-
+            PlayerPrefs.SetInt("Sound", 1);
+            PlayerPrefs.SetInt("Vibration", 1);
 
             PlayerPrefs.SetInt("CurrentMap", 0);
             PlayerPrefs.SetInt("CurrentBall", 0);
-            PlayerPrefs.SetInt("CurrentDifficultyMode", 0);
+            PlayerPrefs.SetInt("CurrentDifficulty", 0);
         }
         else
             _data = saveData;

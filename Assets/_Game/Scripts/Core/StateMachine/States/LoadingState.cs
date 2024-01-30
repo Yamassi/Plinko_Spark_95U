@@ -27,6 +27,7 @@ public class LoadingState : State
         _loading.Logo.transform.localScale = Vector3.zero;
         ComponentsToggle(true);
         CheckGifts();
+        _uIService.UpdateUI();
 
         await UniTask.Delay(100);
         await _loading.Logo.transform.DOScale(Vector3.one, 1).SetEase(Ease.InOutElastic).ToUniTask();
@@ -57,13 +58,15 @@ public class LoadingState : State
     private void CheckGifts()
     {
         int maxGifts = 6;
+        int waitDaysForGift = 1;
+
         var gifts = _dataService.GetData().DailyGiftsData;
         bool isLastGiftTaked = gifts.Last().IsTaked && gifts.Count < maxGifts;
 
         if (isLastGiftTaked)
         {
             DateTime lastGiftTime = Tretimi.Time.ConvertStringToDateTime(gifts.Last().TakedTime);
-            bool isTimeToOpenNewGift = DateTime.Now >= lastGiftTime.AddMinutes(0.3f);
+            bool isTimeToOpenNewGift = DateTime.Now >= lastGiftTime.AddDays(waitDaysForGift);
 
             if (isTimeToOpenNewGift)
             {

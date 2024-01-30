@@ -40,4 +40,5 @@ public abstract class State
     public void GoToSettings() => _stateSwitcher.SwitchState<SettingsState>();
     public void GoToShop() => _stateSwitcher.SwitchState<ShopState>();
     public void GoToDailyTask() => _stateSwitcher.SwitchState<DailyTaskState>();
+    public void GoToGamePlay() => _stateSwitcher.SwitchState<GamePlayState>();
 }

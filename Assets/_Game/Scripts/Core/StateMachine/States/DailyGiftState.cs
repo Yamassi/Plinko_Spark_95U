@@ -25,7 +25,6 @@ public class DailyGiftState : State
     {
         ComponentsToggle(true);
         Subsribe();
-        _uIService.UpdateUI();
         UpdateDailyGifts();
     }
 
