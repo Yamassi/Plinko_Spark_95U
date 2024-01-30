@@ -8,8 +8,10 @@ public class ShopState : State
 {
     private Shop _shop;
     private int _currentShopItem;
+
     public ShopState(IStateSwitcher stateSwitcher, IUIService uIService,
-   IDataService dataService, Shop shop) : base(stateSwitcher, uIService, dataService)
+        IDataService dataService, Top top, Bottom bottom, Shop shop) : base(stateSwitcher, uIService, dataService, top,
+        bottom)
     {
         _shop = shop;
     }

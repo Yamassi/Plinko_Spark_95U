@@ -6,8 +6,9 @@ using UnityEngine;
 public class SettingsState : State
 {
     private Settings _settings;
-    public SettingsState(IStateSwitcher stateSwitcher, IUIService uIService,IDataService dataService,
-    Settings settings) : base(stateSwitcher, uIService,dataService)
+
+    public SettingsState(IStateSwitcher stateSwitcher, IUIService uIService, IDataService dataService,
+        Top top, Bottom bottom, Settings settings) : base(stateSwitcher, uIService, dataService, top, bottom)
     {
         _settings = settings;
     }

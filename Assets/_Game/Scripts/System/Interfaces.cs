@@ -15,6 +15,6 @@ public interface IUIService
 public interface IDataService
 {
     SaveData GetData();
-    void AddMoney(int coins);
-    void RemoveMoney(int coins);
+    void AddCoins(int coins);
+    void RemoveCoins(int coins);
 }

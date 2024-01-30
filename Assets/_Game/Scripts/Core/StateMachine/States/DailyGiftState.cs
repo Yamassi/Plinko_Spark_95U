@@ -1,30 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
-using Tretimi;
-using UniRx;
-using UnityEngine;
-
-public class MainMenuState : State
+public class DailyGiftState : State
 {
-    private MainMenu _mainMenu;
-    private int _currentMapColor, _currentMapType;
-    private CompositeDisposable _disposable = new();
-    private bool _isGameAvailable;
+    private DailyGifts _dailyGifts;
 
-    public MainMenuState(IStateSwitcher stateSwitcher, IUIService uIService,
-        IDataService dataService, Top top, Bottom bottom,
-        MainMenu mainMenu)
+    public DailyGiftState(IStateSwitcher stateSwitcher, IUIService uIService,
+        IDataService dataService, Top top, Bottom bottom, DailyGifts dailyGifts)
         : base(stateSwitcher, uIService, dataService, top, bottom)
     {
-        _mainMenu = mainMenu;
+        _dailyGifts = dailyGifts;
     }
 
     public override void ComponentsToggle(bool value)
     {
-        _mainMenu.gameObject.SetActive(value);
+        _dailyGifts.gameObject.SetActive(value);
         _top.Logo.gameObject.SetActive(value);
         _bottom.Coins.gameObject.SetActive(value);
     }
@@ -33,6 +20,7 @@ public class MainMenuState : State
     {
         ComponentsToggle(true);
         Subsribe();
+        _uIService.UpdateUI();
     }
 
     public override void Exit()
@@ -43,11 +31,13 @@ public class MainMenuState : State
 
     public override void Subsribe()
     {
+        _dailyGifts.Close.onClick.AddListener(GoToMainMenu);
         _bottom.Coins.AddCoins.onClick.AddListener(GoToInAppShop);
     }
 
     public override void Unsubsribe()
     {
+        _dailyGifts.Close.onClick.RemoveListener(GoToMainMenu);
         _bottom.Coins.AddCoins.onClick.RemoveListener(GoToInAppShop);
     }
 }

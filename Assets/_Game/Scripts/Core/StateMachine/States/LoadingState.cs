@@ -9,35 +9,40 @@ using UnityEngine;
 public class LoadingState : State
 {
     private Loading _loading;
-    private CompositeDisposable _disposable = new();
-    public LoadingState(IStateSwitcher stateSwitcher, IUIService uIService, IDataService dataService, Loading loading)
-    : base(stateSwitcher, uIService,dataService)
+
+    public LoadingState(IStateSwitcher stateSwitcher, IUIService uIService,
+        IDataService dataService, Top top, Bottom bottom, Loading loading)
+        : base(stateSwitcher, uIService, dataService, top, bottom)
     {
         _loading = loading;
     }
 
     public override void ComponentsToggle(bool value)
     {
-        throw new NotImplementedException();
+        _loading.gameObject.SetActive(value);
     }
 
-    public override void Enter()
+    public override async void Enter()
     {
-        throw new NotImplementedException();
+        _loading.Logo.transform.localScale = Vector3.zero;
+        ComponentsToggle(true);
+
+        await UniTask.Delay(100);
+        await _loading.Logo.transform.DOScale(Vector3.one, 1).SetEase(Ease.InOutElastic).ToUniTask();
+        await UniTask.Delay(1000);
+        _stateSwitcher.SwitchState<DailyGiftState>();
     }
 
     public override void Exit()
     {
-        throw new NotImplementedException();
+        ComponentsToggle(false);
     }
 
     public override void Subsribe()
     {
-        throw new NotImplementedException();
     }
 
     public override void Unsubsribe()
     {
-        throw new NotImplementedException();
     }
 }
