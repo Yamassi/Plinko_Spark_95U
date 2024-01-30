@@ -66,20 +66,20 @@ public class ShopState : State
 
         for (int i = 0; i < _shop.ShopMaps.Maps.Count; i++)
         {
-            _shop.ShopMaps.Maps[i].OnTryToBuy += TryToBuyMap;
-            _shop.ShopMaps.Maps[i].OnSelect += SelectMap;
+            _shop.ShopMaps.Maps[i].OnTryToBuy -= TryToBuyMap;
+            _shop.ShopMaps.Maps[i].OnSelect -= SelectMap;
         }
 
         for (int i = 0; i < _shop.ShopBalls.Balls.Count; i++)
         {
-            _shop.ShopBalls.Balls[i].OnTryToBuy += TryToBuyBall;
-            _shop.ShopBalls.Balls[i].OnSelect += SelectBall;
+            _shop.ShopBalls.Balls[i].OnTryToBuy -= TryToBuyBall;
+            _shop.ShopBalls.Balls[i].OnSelect -= SelectBall;
         }
     }
 
     private void SelectBall(int id)
     {
-        PlayerPrefs.SetInt("CurrentBall",id);
+        PlayerPrefs.SetInt("CurrentBall", id);
         UpdateShop();
     }
 
@@ -95,7 +95,7 @@ public class ShopState : State
 
     private void SelectMap(int id)
     {
-        PlayerPrefs.SetInt("CurrentMap",id);
+        PlayerPrefs.SetInt("CurrentMap", id);
         UpdateShop();
     }
 
@@ -106,6 +106,7 @@ public class ShopState : State
             _dataService.RemoveCoins(price);
             _dataService.GetData().AvailableMaps.Add(id);
         }
+
         UpdateShop();
     }
 

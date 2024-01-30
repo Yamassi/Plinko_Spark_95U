@@ -9,9 +9,10 @@ public class DailyTask : MonoBehaviour
 {
     [SerializeField] private int _id, _reward;
     [SerializeField] private Button _button;
-    [SerializeField] private GameObject _uncomplete, _complete;
+    [SerializeField] private GameObject _uncomplete, _complete, _ready;
     [SerializeField] private TextMeshProUGUI _price;
-    public Action<int, int> OnGetReward; 
+    public Action<int, int> OnGetReward;
+
     private void OnValidate()
     {
         _button = GetComponent<Button>();
@@ -30,19 +31,22 @@ public class DailyTask : MonoBehaviour
         _button.interactable = false;
         _uncomplete.gameObject.SetActive(true);
         _complete.gameObject.SetActive(false);
+        _ready.gameObject.SetActive(false);
     }
 
-    public void Complete()
+    public void SetComplete()
     {
         _button.interactable = true;
         _uncomplete.gameObject.SetActive(true);
         _complete.gameObject.SetActive(false);
+        _ready.gameObject.SetActive(true);
     }
 
-    public void Taked()
+    public void SetTaked()
     {
         _button.interactable = false;
         _uncomplete.gameObject.SetActive(false);
         _complete.gameObject.SetActive(true);
+        _ready.gameObject.SetActive(false);
     }
 }

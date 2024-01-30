@@ -7,6 +7,8 @@ using UnityEngine;
 using Tretimi;
 using System.Globalization;
 using System.Threading.Tasks;
+using UniRx;
+using Time = UnityEngine.Time;
 
 #if UNITY_IOS
 using UnityEngine.iOS;
@@ -19,6 +21,7 @@ public class Game : IStateSwitcher, IUIService, IDataService
     private StateMachine _stateMachine;
     private List<State> _allStates;
     private GamePlay _gamePlay;
+    private CompositeDisposable _disposable = new CompositeDisposable();
 
     public Game(UIHolder uIHolder, GamePlay gamePlay)
     {
@@ -56,8 +59,44 @@ public class Game : IStateSwitcher, IUIService, IDataService
 
         _stateMachine.Init(_allStates[0]);
 
+        CheckTasks();
+
         await UniTask.Delay(12000);
         RequestToRate();
+    }
+
+    private void CheckTasks()
+    {
+        if (!_data.DailyTasksData[0].IsComplete)
+        {
+            DateTime lastLogInTime = Tretimi.Time.ConvertStringToDateTime(_data.LastLogInTime);
+            if (DateTime.Now > lastLogInTime.AddMinutes(5))
+            {
+                _data.LogInCount++;
+
+                if (_data.LogInCount == 10)
+                    _data.DailyTasksData[0].IsComplete = true;
+            }
+
+            _data.LastLogInTime = DateTime.Now.ToString(DateTimeFormatInfo.CurrentInfo);
+        }
+
+
+        if (!_data.DailyTasksData[1].IsComplete)
+        {
+            float time = 0;
+            int requiredMinutesInGame = 30;
+            Observable.EveryUpdate().Subscribe(_ =>
+            {
+                time += Time.deltaTime;
+                float minutes = Mathf.Floor(time / 60);
+                if (minutes >= requiredMinutesInGame)
+                {
+                    _data.DailyTasksData[1].IsComplete = true;
+                    _disposable.Clear();
+                }
+            }).AddTo(_disposable);
+        }
     }
 
     private void LoadData()
@@ -72,7 +111,14 @@ public class Game : IStateSwitcher, IUIService, IDataService
                 Coins = Const.FirstCoins,
                 AvailableBalls = new() { 0 },
                 AvailableMaps = new() { 0 },
-                DailyGiftsData = new() { new DailyGiftData() }
+                DailyGiftsData = new() { new() },
+                DailyTasksData = new()
+                {
+                    new(), new(), new(),
+                    new(), new(),
+                },
+                LogInCount = 1,
+                LastLogInTime = DateTime.Now.ToString(DateTimeFormatInfo.CurrentInfo),
             };
 
             PlayerPrefs.SetFloat("MusicVolume", 1);

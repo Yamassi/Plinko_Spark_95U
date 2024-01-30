@@ -4,7 +4,7 @@ using UnityEngine;
 
 public static class Const
 {
-    public const int FirstCoins = 500,
+    public const int FirstCoins = 60000,
         WaitToAddEnergyTimeMinutes = 30,
         StartEnergy = 5,
         MaxEnergy = 5;
