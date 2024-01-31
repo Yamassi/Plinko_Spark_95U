@@ -59,6 +59,7 @@ public class SettingsState : State
     {
         _isSoundEnable = !_isSoundEnable;
         PlayerPrefs.SetInt("Sound", _isSoundEnable ? 1 : 0);
+        AudioSystem.Instance.UpdateSoundVolume();
         UpdateSound();
     }
 

@@ -135,7 +135,7 @@ public class Game : IStateSwitcher, IUIService, IDataService
     public async Task ChangeBackground(int backgroundID)
     {
         _uIHolder.GameBackground.gameObject.SetActive(true);
-        _uIHolder.GameBackground.sprite = await Assets.GetAsset<Sprite>($"Back{backgroundID}");
+        _uIHolder.GameBackground.sprite = await Assets.GetAsset<Sprite>($"Background{backgroundID}");
     }
 
     public void SwitchState<T>() where T : State

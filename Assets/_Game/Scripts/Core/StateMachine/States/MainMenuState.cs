@@ -33,6 +33,7 @@ public class MainMenuState : State
     {
         ComponentsToggle(true);
         Subsribe();
+        _uIService.ChangeBackground(0);
     }
 
     public override void Exit()

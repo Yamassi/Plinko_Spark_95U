@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class GamePlayUI : MonoBehaviour
 {
-    public Button Drop, DecreaseBid, IncreaseBid;
-    public TextMeshProUGUI BidText;
+    public Button Drop, DecreaseBid, IncreaseBid, Close;
+    public TextMeshProUGUI BidText, WinScoreText, LoseScoreText;
+    public GameObject WinScore, LoseScore;
 }
